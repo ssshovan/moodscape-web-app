@@ -40,34 +40,14 @@ MoodScape is a web application where users review movies based on emotions (mood
 ```
 moodscape/
 ├── backend/
-│   ├── app.py                 # Flask application with CRUD routes
-│   ├── templates/
-│   │   ├── base.html          # Base template
-│   │   ├── login.html         # User login
-│   │   ├── register.html      # User registration
-│   │   ├── search.html        # Search and filter movies
-│   │   ├── profile.html       # User profile
-│   │   ├── movies/
-│   │   │   ├── list.html      # List all movies
-│   │   │   ├── detail.html    # Movie details with reviews
-│   │   │   ├── add.html       # Add movie (admin)
-│   │   │   └── edit.html      # Edit movie (admin)
-│   │   ├── reviews/
-│   │   │   └── add.html       # Add/edit reviews
-│   │   └── admin/
-│   │       ├── dashboard.html # Admin dashboard
-│   │       ├── users.html     # Manage users
-│   │       └── requests.html  # User requests
-│   └── static/
-│       ├── css/
-│       │   └── style.css      
-│       └── js/
-│           └── main.js        
+│   ├── app.py                  # Flask application with CRUD routes
+│   ├── templates/              # Jinja2 HTML Templates
+│   └── static/                 # CSS & JS assets
 ├── database/
-│   ├── schema.sql             # CREATE TABLE statements (3NF normalized)
-│   ├── sample_data.sql        # Sample INSERT statements
-
-└── README.md                  # Project documentation
+│   ├── schema.sql              # DDL statements (3NF normalized)
+│   └── sample_data.sql         # DML statements for testing
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
 ```
 
 ---
