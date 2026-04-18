@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - MoodScape{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>My Profile</h1>
+    
+    <div class="profile-info">
+        <h2>{{ user_profile.Name }}</h2>
+        <p><strong>Email:</strong> {{ user_profile.Email }}</p>
+        <p><strong>Member since:</strong> {{ user_profile.JoinDate.strftime('%B %d, %Y') }}</p>
+    </div>
+    
+    <div class="profile-stats">
+        <div class="stat-card">
+            <h3>Movies Reviewed</h3>
+            <p class="stat-number">{{ user_profile.MoviesReviewed or 0 }}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h3>Reviews Written</h3>
+            <p class="stat-number">{{ user_profile.ReviewsWritten or 0 }}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h3>Average Rating Given</h3>
+            <p class="stat-number">{{ "%.1f"|format(user_profile.AverageRatingGiven) if user_profile.AverageRatingGiven else 'N/A' }}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h3>Mood Tags Used</h3>
+            <p class="stat-number">{{ user_profile.DifferentMoodsUsed or 0 }}</p>
+        </div>
+    </div>
+    
+    <div class="profile-sections">
+        <div class="section">
+            <h3>Most Used Moods</h3>
+            {% if user_moods %}
+                <ul class="mood-list">
+                    {% for mood in user_moods %}
+                        <li class="mood-item">
+                            <span class="mood-name">{{ mood.MoodName }}</span>
+                            <span class="mood-count">({{ mood.UsageCount }} times)</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No mood tags used yet.</p>
+            {% endif %}
+        </div>
+        
+        <div class="section">
+            <h3>Movies You've Reviewed</h3>
+            {% if reviewed_movies %}
+                <div class="reviewed-movies">
+                    {% for movie in reviewed_movies %}
+                        <div class="reviewed-movie">
+                            <h4><a href="{{ url_for('movie_detail', movie_id=movie.MovieID) }}">{{ movie.Name }}</a></h4>
+                            <p class="movie-meta">{{ movie.ReleaseYear }} • {{ movie.GenreName }}</p>
+                            <p class="your-rating">Your Rating: {{ movie.NumRating }}/10</p>
+                            {% if movie.ReviewText %}
+                                <p class="review-snippet">{{ movie.ReviewText[:100] }}{% if movie.ReviewText|length > 100 %}...{% endif %}</p>
+                            {% endif %}
+                            <p class="review-date">Reviewed on {{ movie.CreatedAt.strftime('%Y-%m-%d') }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>You haven't reviewed any movies yet.</p>
+                <p><a href="{{ url_for('list_movies') }}">Browse movies</a> to start reviewing!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
